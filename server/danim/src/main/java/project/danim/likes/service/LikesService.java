@@ -5,53 +5,45 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import project.danim.diary.domain.Diary;
 import project.danim.diary.repository.DiaryRepository;
-import project.danim.diary.service.DiaryService;
 import project.danim.likes.domain.Likes;
 import project.danim.likes.repository.LikesRepository;
 import project.danim.member.domain.Member;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 
 @Transactional
-@RequiredArgsConstructor
 @Service
 public class LikesService {
 
     private final LikesRepository likesRepository;
-    private final DiaryService diaryService;
+    private final DiaryRepository diaryRepository;
 
-    public boolean booleanLike(Long memberId, Long diaryId){
+    public LikesService(LikesRepository likesRepository, DiaryRepository diaryRepository){
+        this.likesRepository = likesRepository;
+        this.diaryRepository = diaryRepository;
+    }
 
-        Diary diary = diaryService.findDiary(diaryId);
+    public boolean addLike(Member member, Long diaryId){
+        Diary diary = diaryRepository.findById(diaryId).orElseThrow();
 
-        if(isNotAlreadyLike(memberId,diaryId)) {
-            diary.setLikesCount(diary.getLikesCount()+1);
-            likesRepository.save(new Likes(memberId,diaryId));
-            diaryService.savedLikesCount(diary);
+        if(isNotAlreadyLike(member,diary)) {
+            likesRepository.save(new Likes(member,diary));
             return true;
         }
         else {
-            diary.setLikesCount(diary.getLikesCount()-1);
-            likesRepository.delete(findLikes(memberId, diaryId));
-            diaryService.savedLikesCount(diary);
+            likesRepository.delete(findLikes(diary,member));
         }
         return false;
     }
 
-    public boolean isNotAlreadyLike(Long memberId, Long diaryId) {
-        return likesRepository.findByMemberIdAndDiaryId(memberId, diaryId).isEmpty();
+    public boolean isNotAlreadyLike(Member member, Diary diary) {
+        return likesRepository.findByMemberAndDiary(member, diary).isEmpty();
     }
 
-    public Likes findLikes(Long memberId, Long diaryId){
-        return likesRepository.findByMemberIdAndDiaryId(memberId, diaryId).orElse(null);
+    public Likes findLikes(Diary diary, Member member){
+        return likesRepository.findByMemberAndDiary(member,diary).orElse(null);
     }
-
-
 
 }
 

@@ -45,8 +45,6 @@ public class Diary extends BaseTime {
     @Column(nullable = false)
     private int cost;
 
-    @Column(nullable = true, name ="likes_count")
-    private Integer likesCount;
 
     @CreatedDate
     private LocalDateTime createdDate = LocalDateTime.now();
@@ -104,10 +102,10 @@ public class Diary extends BaseTime {
      */
 
     //private AggregateReference<Member, Long> memberId;
-/*
+
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
     Set<Likes> likes = new HashSet<>();
 
- */
+
 
 }

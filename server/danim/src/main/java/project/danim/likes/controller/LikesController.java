@@ -17,8 +17,8 @@ import java.util.Objects;
 
 @Api(tags = {"Likes API"})
 @Slf4j
-@RestController
 @RequestMapping("/likes")
+@RestController
 public class LikesController {
 
     private final LikesService likesService;
@@ -26,6 +26,7 @@ public class LikesController {
     public LikesController(LikesService likesService){
         this.likesService = likesService;
     }
+
     /*
     @GetMapping("/{diary-id}")
     public String getLikeMembers(@Positive @PathVariable("diary-id") long dairyId) {
@@ -39,18 +40,18 @@ public class LikesController {
     @ApiOperation(value = "좋아요 등록")
     @PostMapping("/{diary-id}")
     public ResponseEntity<String> addLike(@Positive @PathVariable("diary-id") long diaryId,
-                                          @RequestParam("memberId") @Positive long memberId
+                                          @RequestParam("member") @Positive Member member
                                           ){
 
-     //  log.info("===================좋아요 클릭=======================");
+       log.info("===================좋아요 클릭=======================");
         boolean result = false;
 
-        if (memberId != 0) {
-            result = likesService.booleanLike(memberId, diaryId);
+        if (member != null) {
+            result = likesService.addLike(member, diaryId);
         }
+
         return result ?
-                new ResponseEntity<>("좋아요 추가", HttpStatus.CREATED) :
-                new ResponseEntity<>("좋아요 삭제", HttpStatus.OK);
+                new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     }

@@ -16,7 +16,6 @@ public class DiaryResponseDto {
     private String area;
     private int cost;
     private long memberId;
-    private long likeCount;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 

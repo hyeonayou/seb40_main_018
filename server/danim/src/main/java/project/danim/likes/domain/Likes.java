@@ -25,19 +25,19 @@ public class Likes {
 
 
 
-    //@ManyToOne   // (1)
-    //@JoinColumn(name = "MEMBER_ID", nullable = false )  // (2)
-    private Long memberId;
+    @ManyToOne   // (1)
+    @JoinColumn(name = "MEMBER_ID", nullable = false )  // (2)
+    private Member member;
 
 
-   // @ManyToOne
-   // @JoinColumn(name = "Diary_ID" , nullable = false)
-    private Long diaryId;
+    @ManyToOne
+    @JoinColumn(name = "Diary_ID" , nullable = false)
+    private Diary diary;
 
 
-    public Likes(Long diaryId, Long memberId){
-        this.diaryId = diaryId;
-        this.memberId = memberId;
+    public Likes(Member member, Diary diary){
+        this.diary = diary;
+        this.member = member;
     }
 
 }
