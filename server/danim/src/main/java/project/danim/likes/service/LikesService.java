@@ -10,6 +10,7 @@ import project.danim.likes.repository.LikesRepository;
 import project.danim.member.domain.Member;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 
 @Transactional
@@ -36,6 +37,8 @@ public class LikesService {
         }
         return false;
     }
+
+
 
     public boolean isNotAlreadyLike(Member member, Diary diary) {
         return likesRepository.findByMemberAndDiary(member, diary).isEmpty();

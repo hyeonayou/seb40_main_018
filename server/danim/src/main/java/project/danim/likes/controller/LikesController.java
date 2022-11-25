@@ -27,13 +27,13 @@ public class LikesController {
         this.likesService = likesService;
     }
 
-    /*
+
     @GetMapping("/{diary-id}")
-    public String getLikeMembers(@Positive @PathVariable("diary-id") long dairyId) {
-        return "Like click members!!";
+    public ResponseEntity getLikeMembers(@Positive @PathVariable("diary-id") long dairyId) {
+        return new ResponseEntity<>(, HttpStatus.OK);
     }
 
-*/
+
     /*
     JWT를 이용한 로그인 정보 필요... .. 인증된 사용자 정보 가져요기
      */
